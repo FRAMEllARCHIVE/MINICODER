@@ -31,7 +31,7 @@
         textarea:focus {
             outline: none;
         }
-        .fixed-button {
+        .fixed-button1 {
             position: fixed;
             top: 11px;
             right: 11px;
@@ -40,9 +40,25 @@
             color: white;
             cursor: pointer;
             padding: 11px;
-            font-size: 44px;
+            font-size: 33px;
             z-index: 10;
-opacity: 0.2;
+            opacity: 0.2;
+        }
+        .fixed-button2 {
+            position: fixed;
+            top: 66px;
+            right: 11px;
+            border: none;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            padding: 11px;
+            font-size: 33px;
+            z-index: 10;
+            opacity: 0.2;
+        }
+        input[type="file"] {
+            display: none;
         }
     </style>
 </head>
@@ -50,16 +66,20 @@ opacity: 0.2;
 
     <textarea id="editor" placeholder="Write your code here..."></textarea>
     
-<button id="saveBtn" class="fixed-button" title="Download File">
-    &#x1F4E5;
-</button>
+    <button id="saveBtn" class="fixed-button1" title="Download File">
+        &#x1F4E5;
+    </button>
 
+    <button id="openBtn" class="fixed-button2" title="Open File">
+        &#x1F4C2;
+    </button>
 
+    <input type="file" id="fileInput" /> 
 
     <script>
         document.getElementById('saveBtn').addEventListener('click', function() {
             const text = document.getElementById('editor').value;
-            const filename = prompt("Enter filename (with extension):", "file.txt");
+            const filename = prompt("SAVE AS:", "index.html");
 
             if (filename) {
                 const blob = new Blob([text], { type: 'text/plain' });
@@ -71,6 +91,21 @@ opacity: 0.2;
                 a.click();
 
                 URL.revokeObjectURL(url);
+            }
+        });
+
+        document.getElementById('openBtn').addEventListener('click', function() {
+            document.getElementById('fileInput').click();
+        });
+
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('editor').value = e.target.result;
+                };
+                reader.readAsText(file);
             }
         });
     </script>
