@@ -18,9 +18,9 @@
             height: 100vh; /* Full viewport height */
         }
         #editor {
-            width: 90vw; /* 90% of viewport width */
-            height: calc(100vh - 60px); /* Full height minus button and indicator */
-            margin-left: 5%; /* Centering the editor */
+            width: 90vw;
+            height: calc(100vh - 60px);
+            margin-left: 5%;
             padding: 20px;
             font-family: monospace;
             background-color: #1a1a1a;
@@ -37,21 +37,17 @@
             display: none; /* Chrome, Safari, Opera */
         }
         .fixed-button, #lineCount {
-            position: fixed;
+            position: absolute;
             background: transparent;
             color: white;
             z-index: 10;
         }
         .fixed-button {
-            top: 10px; /* Button position */
-            right: 20px;
-            font-size: 32px; /* Adjusted button size */
+            font-size: 32px;
             border: none;
         }
         #lineCount {
-            top: 10px; /* Line count position */
-            left: 20px;
-            font-size: 14px; /* Adjusted line count size */
+            font-size: 14px;
         }
     </style>
 </head>
@@ -60,11 +56,11 @@
     <div id="container">
         <textarea id="editor" placeholder="Write your code here..."></textarea>
         
-        <button id="saveBtn" class="fixed-button" title="Download File">
+        <button id="saveBtn" class="fixed-button" title="Download File" style="top: 10px; right: 20px;">
             ⤵
         </button>
 
-        <div id="lineCount">1</div>
+        <div id="lineCount" style="top: 10px; left: 20px;">1</div>
     </div>
 
     <script>
@@ -73,16 +69,24 @@
         const saveBtn = document.getElementById('saveBtn');
 
         function updateLineCount() {
-            const lines = editor.value.split("\n").length;
+            const lines = editor.value.substr(0, editor.selectionStart).split("\n").length;
             lineCount.textContent = lines; // Update line count
+
+            // Dynamically position line count and save button based on scroll position
+            const editorRect = editor.getBoundingClientRect();
+            lineCount.style.top = `${editorRect.top + window.scrollY + 10}px`;  // Adjust top position
+            saveBtn.style.top = `${editorRect.top + window.scrollY + 10}px`;  // Adjust top position
         }
 
         editor.addEventListener('input', updateLineCount);
+        editor.addEventListener('click', updateLineCount);
+        editor.addEventListener('focus', updateLineCount);
+        editor.addEventListener('scroll', updateLineCount); // Update on scroll as well
 
         // Save button functionality
         saveBtn.addEventListener('click', function() {
             const text = editor.value;
-            const filename = prompt("Save as:", "code.txt") || "code.txt"; // Default filename
+            const filename = prompt("Save as:", "code.txt") || "code.txt";
 
             if (filename) {
                 const blob = new Blob([text], { type: 'text/plain' });
@@ -93,7 +97,7 @@
                 a.download = filename;
                 a.click();
 
-                URL.revokeObjectURL(url); // Free up memory
+                URL.revokeObjectURL(url);
             }
         });
     </script>
