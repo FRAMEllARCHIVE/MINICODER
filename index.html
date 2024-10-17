@@ -27,32 +27,29 @@
             box-sizing: border-box;
             line-height: 1.5;
             overflow-y: auto;
-            opacity:0.5;
+            opacity: 0.5;
+            padding-top: 60px;
         }
         textarea:focus {
             outline: none;
         }
-        .fixed-button {
+        .fixed-button, #lineCount {
             position: fixed;
-            top: 12px;
-            right: 20px;
-            border: none;
             background: transparent;
             color: white;
-            cursor: pointer;
-            padding: 15px;
-            font-size: 44px;
             z-index: 10;
         }
+        .fixed-button {
+            top: 12px;
+            right: 20px;
+            font-size: 44px;
+            border: none;
+        }
         #lineCount {
-            position: fixed;
-            top: 5px;
-            right: 5px;
-            color: #ffffff;
-            font-size: 22px;
-            background-color: transparent;
-            padding: 5px 10px;
-
+            top: 11px;
+            right: 11px;
+            font-size: 11px;
+            padding: 0;
         }
     </style>
 </head>
@@ -81,7 +78,7 @@
 
         document.getElementById('saveBtn').addEventListener('click', function() {
             const text = editor.value;
-            const filename = prompt("Enter filename (with extension):", "index.html");
+            const filename = prompt("Save as:", "index.html");
 
             if (filename) {
                 const blob = new Blob([text], { type: 'text/plain' });
