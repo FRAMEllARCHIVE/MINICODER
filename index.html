@@ -33,15 +33,16 @@
         }
         .fixed-button {
             position: fixed;
-            top: 12px;
-            right: 20px;
+            top: -9px;
+            left: 0px;
             border: none;
             background: transparent;
             color: white;
             cursor: pointer;
-            padding: 15px;
-            font-size: 44px;
+            padding: 8px;
+            font-size: 36px;
             z-index: 10;
+opacity: 0.2;
         }
     </style>
 </head>
@@ -49,9 +50,11 @@
 
     <textarea id="editor" placeholder="Write your code here..."></textarea>
     
-    <button id="saveBtn" class="fixed-button" title="Download File">
-        ⤵
-    </button>
+<button id="saveBtn" class="fixed-button" title="Download File">
+    &#x1F4E5;
+</button>
+
+
 
     <script>
         document.getElementById('saveBtn').addEventListener('click', function() {
