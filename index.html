@@ -15,7 +15,7 @@
         }
         #editor {
             width: 100vw;
-            height: calc(100vh - 100px); /* Adjusted height */
+            height: calc(100vh - 100px);
             padding: 50px;
             font-family: monospace;
             outline: none;
@@ -26,11 +26,14 @@
             resize: none;
             box-sizing: border-box;
             line-height: 1.5;
-            overflow-y: auto;
-            padding-top: 20px; /* Reduced padding to accommodate the line count */
+            overflow-y: scroll; /* Allows vertical scrolling */
+            padding-top: 20px;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
         }
-        textarea:focus {
-            outline: none;
+        /* For Chrome, Safari, and Opera */
+        #editor::-webkit-scrollbar {
+            display: none;
         }
         .fixed-button {
             position: fixed;
@@ -47,8 +50,8 @@
             background: transparent;
             color: white;
             z-index: 10;
-            top: 12px; /* Always visible at the top left */
-            left: 20px; /* Positioned at the left */
+            top: 12px;
+            left: 20px;
             font-size: 11px;
             padding: 0;
         }
