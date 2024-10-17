@@ -14,9 +14,10 @@
             overflow: hidden;
         }
         #editor {
-            width: 100vw;
+            width: 90vw; /* Adjust width to account for left margin */
             height: calc(100vh - 100px);
             padding: 50px;
+            margin-left: 5%; /* Margin on the left */
             font-family: monospace;
             outline: none;
             white-space: pre;
@@ -29,7 +30,7 @@
             overflow-y: scroll; /* Allows vertical scrolling */
             padding-top: 20px;
             scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none;  /* IE and Edge */
+            -ms-overflow-style: none; /* IE and Edge */
         }
         /* For Chrome, Safari, and Opera */
         #editor::-webkit-scrollbar {
@@ -50,8 +51,8 @@
             background: transparent;
             color: white;
             z-index: 10;
-            top: 12px;
-            left: 20px;
+            top: 12px; /* Keep the line count fixed */
+            left: 2%; /* Positioned outside the editor */
             font-size: 11px;
             padding: 0;
         }
