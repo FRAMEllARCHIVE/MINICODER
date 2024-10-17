@@ -15,7 +15,7 @@
         }
         #editor {
             width: 100vw;
-            height: 100vh;
+            height: calc(100vh - 100px); /* Adjusted height */
             padding: 50px;
             font-family: monospace;
             outline: none;
@@ -27,7 +27,6 @@
             box-sizing: border-box;
             line-height: 1.5;
             overflow-y: auto;
-            opacity: 0.5;
             padding-top: 60px;
         }
         textarea:focus {
@@ -38,6 +37,7 @@
             background: transparent;
             color: white;
             z-index: 10;
+            transition: top 0.3s; /* Smooth transition */
         }
         .fixed-button {
             top: 12px;
@@ -66,6 +66,7 @@
     <script>
         const editor = document.getElementById('editor');
         const lineCount = document.getElementById('lineCount');
+        const saveBtn = document.getElementById('saveBtn');
 
         function updateLineCount() {
             const lines = editor.value.substr(0, editor.selectionStart).split("\n").length;
@@ -76,7 +77,19 @@
         editor.addEventListener('click', updateLineCount);
         editor.addEventListener('keyup', updateLineCount);
 
-        document.getElementById('saveBtn').addEventListener('click', function() {
+        // Adjust button position on focus/blur
+        editor.addEventListener('focus', () => {
+            saveBtn.style.top = '100px'; // Adjust as needed
+            lineCount.style.top = '100px'; // Adjust as needed
+        });
+
+        editor.addEventListener('blur', () => {
+            saveBtn.style.top = '12px';
+            lineCount.style.top = '11px';
+        });
+
+        // Save button functionality
+        saveBtn.addEventListener('click', function() {
             const text = editor.value;
             const filename = prompt("Save as:", "index.html");
 
@@ -92,6 +105,15 @@
                 URL.revokeObjectURL(url);
             }
         });
+
+        // Adjust editor height on resize
+        function adjustEditorHeight() {
+            const viewportHeight = window.innerHeight;
+            editor.style.height = `${viewportHeight - 100}px`; // Adjust this value accordingly
+        }
+
+        window.addEventListener('resize', adjustEditorHeight);
+        adjustEditorHeight(); // Call on page load
     </script>
 
 </body>
