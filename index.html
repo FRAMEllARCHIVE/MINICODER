@@ -13,60 +13,59 @@
             color: #ffffff;
             overflow: hidden;
         }
+        #container {
+            position: relative;
+            height: 100vh; /* Full viewport height */
+        }
         #editor {
-            width: 90vw; /* Adjust width to account for left margin */
-            height: calc(100vh - 100px);
-            padding: 50px;
-            margin-left: 5%; /* Margin on the left */
+            width: 90vw; /* 90% of viewport width */
+            height: calc(100vh - 60px); /* Full height minus button and indicator */
+            margin-left: 5%; /* Centering the editor */
+            padding: 20px;
             font-family: monospace;
-            outline: none;
-            white-space: pre;
             background-color: #1a1a1a;
             color: #ffffff;
             border: none;
             resize: none;
             box-sizing: border-box;
             line-height: 1.5;
-            overflow-y: scroll; /* Allows vertical scrolling */
-            padding-top: 20px;
+            overflow-y: scroll; /* Allows scrolling */
             scrollbar-width: none; /* Firefox */
             -ms-overflow-style: none; /* IE and Edge */
         }
-        /* For Chrome, Safari, and Opera */
         #editor::-webkit-scrollbar {
-            display: none;
+            display: none; /* Chrome, Safari, Opera */
         }
-        .fixed-button {
+        .fixed-button, #lineCount {
             position: fixed;
             background: transparent;
             color: white;
             z-index: 10;
-            top: 12px;
+        }
+        .fixed-button {
+            top: 10px; /* Button position */
             right: 20px;
-            font-size: 44px;
+            font-size: 32px; /* Adjusted button size */
             border: none;
         }
         #lineCount {
-            position: fixed;
-            background: transparent;
-            color: white;
-            z-index: 10;
-            top: 12px; /* Keep the line count fixed */
-            left: 2%; /* Positioned outside the editor */
-            font-size: 11px;
-            padding: 0;
+            top: 10px; /* Line count position */
+            left: 20px;
+            font-size: 14px; /* Adjusted line count size */
         }
     </style>
 </head>
 <body>
 
-    <textarea id="editor" placeholder="Write your code here..."></textarea>
-    
-    <button id="saveBtn" class="fixed-button" title="Download File">
-        ⤵
-    </button>
+    <div id="container">
+        <textarea id="editor" placeholder="Write your code here..."></textarea>
+        
+        <button id="saveBtn" class="fixed-button" title="Download File">
+            ⤵
+        </button>
 
-    <div id="lineCount">1</div>
+        <div id="lineCount">1</div>
+    </div>
 
     <script>
         const editor = document.getElementById('editor');
@@ -74,18 +73,16 @@
         const saveBtn = document.getElementById('saveBtn');
 
         function updateLineCount() {
-            const lines = editor.value.substr(0, editor.selectionStart).split("\n").length;
-            lineCount.textContent = lines;
+            const lines = editor.value.split("\n").length;
+            lineCount.textContent = lines; // Update line count
         }
 
         editor.addEventListener('input', updateLineCount);
-        editor.addEventListener('click', updateLineCount);
-        editor.addEventListener('keyup', updateLineCount);
 
         // Save button functionality
         saveBtn.addEventListener('click', function() {
             const text = editor.value;
-            const filename = prompt("Save as:", "index.html");
+            const filename = prompt("Save as:", "code.txt") || "code.txt"; // Default filename
 
             if (filename) {
                 const blob = new Blob([text], { type: 'text/plain' });
@@ -96,18 +93,9 @@
                 a.download = filename;
                 a.click();
 
-                URL.revokeObjectURL(url);
+                URL.revokeObjectURL(url); // Free up memory
             }
         });
-
-        // Adjust editor height on resize
-        function adjustEditorHeight() {
-            const viewportHeight = window.innerHeight;
-            editor.style.height = `${viewportHeight - 100}px`; // Adjust this value accordingly
-        }
-
-        window.addEventListener('resize', adjustEditorHeight);
-        adjustEditorHeight(); // Call on page load
     </script>
 
 </body>
