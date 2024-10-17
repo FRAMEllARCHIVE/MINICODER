@@ -27,27 +27,28 @@
             box-sizing: border-box;
             line-height: 1.5;
             overflow-y: auto;
-            padding-top: 60px;
+            padding-top: 20px; /* Reduced padding to accommodate the line count */
         }
         textarea:focus {
             outline: none;
         }
-        .fixed-button, #lineCount {
+        .fixed-button {
             position: fixed;
             background: transparent;
             color: white;
             z-index: 10;
-            transition: top 0.3s; /* Smooth transition */
-        }
-        .fixed-button {
             top: 12px;
             right: 20px;
             font-size: 44px;
             border: none;
         }
         #lineCount {
-            top: 11px;
-            right: 11px;
+            position: fixed;
+            background: transparent;
+            color: white;
+            z-index: 10;
+            top: 12px; /* Always visible at the top left */
+            left: 20px; /* Positioned at the left */
             font-size: 11px;
             padding: 0;
         }
@@ -76,17 +77,6 @@
         editor.addEventListener('input', updateLineCount);
         editor.addEventListener('click', updateLineCount);
         editor.addEventListener('keyup', updateLineCount);
-
-        // Adjust button position on focus/blur
-        editor.addEventListener('focus', () => {
-            saveBtn.style.top = '100px'; // Adjust as needed
-            lineCount.style.top = '100px'; // Adjust as needed
-        });
-
-        editor.addEventListener('blur', () => {
-            saveBtn.style.top = '12px';
-            lineCount.style.top = '11px';
-        });
 
         // Save button functionality
         saveBtn.addEventListener('click', function() {
