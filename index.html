@@ -9,87 +9,54 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #1a1a1a;
+            background-color: #1e1e1e;
             color: #ffffff;
             overflow: hidden;
         }
-        #container {
-            position: relative;
-            height: 100vh; /* Full viewport height */
-        }
         #editor {
-            width: 90vw;
-            height: calc(100vh - 60px);
-            margin-left: 5%;
-            padding: 20px;
+            width: 100vw;
+            height: 100vh;
+            padding: 50px;
             font-family: monospace;
-            background-color: #1a1a1a;
+            outline: none;
+            white-space: pre;
+            background-color: #2e2e2e;
             color: #ffffff;
             border: none;
             resize: none;
             box-sizing: border-box;
             line-height: 1.5;
-            overflow-y: scroll; /* Allows scrolling */
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE and Edge */
+            overflow-y: auto;
         }
-        #editor:focus {
-            outline: none; /* Removes white border around text area when focused */
-        }
-        #editor::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Opera */
-        }
-        .fixed-button, #lineCount {
-            position: absolute;
-            background: transparent;
-            color: white;
-            z-index: 10;
+        textarea:focus {
+            outline: none;
         }
         .fixed-button {
-            font-size: 32px;
+            position: fixed;
+            top: 12px;
+            right: 20px;
             border: none;
-        }
-        #lineCount {
-            font-size: 14px;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            font-size: 44px;
+            z-index: 10;
         }
     </style>
 </head>
 <body>
 
-    <div id="container">
-        <textarea id="editor" placeholder="Write your code here..."></textarea>
-        
-        <button id="saveBtn" class="fixed-button" title="Download File" style="top: 10px; right: 20px;">
-            ⤵
-        </button>
-
-        <div id="lineCount" style="top: 10px; left: 20px;">1</div>
-    </div>
+    <textarea id="editor" placeholder="Write your code here..."></textarea>
+    
+    <button id="saveBtn" class="fixed-button" title="Download File">
+        ⤵
+    </button>
 
     <script>
-        const editor = document.getElementById('editor');
-        const lineCount = document.getElementById('lineCount');
-        const saveBtn = document.getElementById('saveBtn');
-
-        function updateLineCount() {
-            const lines = editor.value.substr(0, editor.selectionStart).split("\n").length;
-            lineCount.textContent = lines; // Update line count
-
-            // Dynamically position line count and save button based on scroll position
-            const editorRect = editor.getBoundingClientRect();
-            lineCount.style.top = `${editorRect.top + window.scrollY + 10}px`;  // Adjust top position
-            saveBtn.style.top = `${editorRect.top + window.scrollY + 10}px`;  // Adjust top position
-        }
-
-        editor.addEventListener('input', updateLineCount);
-        editor.addEventListener('click', updateLineCount);
-        editor.addEventListener('focus', updateLineCount);
-        editor.addEventListener('scroll', updateLineCount); // Update on scroll as well
-
-        // Save button functionality
-        saveBtn.addEventListener('click', function() {
-            const text = editor.value;
-            const filename = prompt("Save as:", "code.txt") || "code.txt";
+        document.getElementById('saveBtn').addEventListener('click', function() {
+            const text = document.getElementById('editor').value;
+            const filename = prompt("Enter filename (with extension):", "file.txt");
 
             if (filename) {
                 const blob = new Blob([text], { type: 'text/plain' });
