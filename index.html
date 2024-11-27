@@ -13,24 +13,29 @@
             color: #ffffff;
             overflow: hidden;
         }
-        #editor {
-            width: 100vw;
-            height: 50vh;
-            padding: 20px;
-            font-family: monospace;
-            outline: none;
-            white-space: pre;
-            background-color: black;
-            color: green;
-            border: none;
-            resize: none;
-            box-sizing: border-box;
-            line-height: 1.5;
-            overflow-y: scroll;
-            scrollbar-width: thin;
-            scrollbar-color: transparent transparent;
-            opacity: 75%;
-        }
+#editor {
+    width: 100vw;
+    height: 50vh;
+    padding: 20px;
+    font-family: monospace;
+    outline: none;
+    white-space: pre;
+    background-color: black;
+    color: green;
+    border: none;
+    resize: none;
+    box-sizing: border-box;
+    line-height: 1.5;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+    opacity: 77%;
+    text-shadow:
+        0 0 1px #00ff00, 
+        0 0 9px #00ff00,
+        0 0 55px #00ff00;
+}
+
         #editor::-webkit-scrollbar {
             width: 0;
             background: transparent;
@@ -75,9 +80,11 @@
             border-radius: 5px;
         }
 
+
     </style>
 </head>
 <body>
+
 
     <div class="button-container">
         <button id="saveBtn" class="fixed-button" title="Download File">
@@ -101,8 +108,9 @@
         </button>
 
         <button id="runCodeBtn" class="fixed-button" title="Run Code">
-            &#x1F50E;
+        &#x1F680;
         </button>
+
 
 <button id="chatGPTBtn" class="fixed-button" title="Open ChatGPT">
     <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="1.5" class="h-6 w-6" viewBox="-0.17090198558635983 0.482230148717937 41.14235318283891 40.0339509076386">
@@ -126,7 +134,7 @@
         let editor = document.getElementById('editor');
         let undoStack = [];
         let redoStack = [];
-        const MAX_HISTORY = 100;
+        const MAX_HISTORY = 30;
 
         window.onload = function() {
             const savedContent = localStorage.getItem('editorContent');
@@ -254,8 +262,7 @@
             }
         }
 
-        // Open ChatGPT in a new tab when the button is clicked
-        document.getElementById('chatGPTBtn').addEventListener('click', function() {
+       document.getElementById('chatGPTBtn').addEventListener('click', function() {
             window.open('https://chatgpt.com/', '_blank');
         });
     </script>
