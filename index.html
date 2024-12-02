@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<!-- Legal Footnote: This content is subject to copyright and should not be reproduced without permission. -->
+<!-- Written and created by Thomas John-Michael de Beer, feel free to contact me via tjdebeer@gmail.com  -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -25,15 +27,12 @@
     border: none;
     resize: none;
     box-sizing: border-box;
+            font-size: 24px;
     line-height: 1.5;
     overflow-y: scroll;
     scrollbar-width: thin;
     scrollbar-color: transparent transparent;
     opacity: 77%;
-    text-shadow:
-        0 0 1px #00ff00, 
-        0 0 9px #00ff00,
-        0 0 55px #00ff00;
 }
 
         #editor::-webkit-scrollbar {
@@ -119,6 +118,11 @@
     </svg>
 </button>
 
+<button id="selectSectionBtn" class="fixed-button" title="Select Section">
+    &#x2702;
+</button>
+
+
 
     </div>
 
@@ -134,7 +138,7 @@
         let editor = document.getElementById('editor');
         let undoStack = [];
         let redoStack = [];
-        const MAX_HISTORY = 30;
+        const MAX_HISTORY = 11;
 
         window.onload = function() {
             const savedContent = localStorage.getItem('editorContent');
@@ -265,6 +269,34 @@
        document.getElementById('chatGPTBtn').addEventListener('click', function() {
             window.open('https://chatgpt.com/', '_blank');
         });
+
+let selectingSection = false;
+let startSelectionIndex = null;
+
+document.getElementById('selectSectionBtn').addEventListener('click', function() {
+    selectingSection = true;
+    startSelectionIndex = null;
+});
+
+editor.addEventListener('click', function(event) {
+    if (!selectingSection) return;
+
+    const cursorPosition = editor.selectionStart;
+
+    if (startSelectionIndex === null) {
+        startSelectionIndex = cursorPosition;
+    } else {
+        const endSelectionIndex = cursorPosition;
+        const start = Math.min(startSelectionIndex, endSelectionIndex);
+        const end = Math.max(startSelectionIndex, endSelectionIndex);
+        editor.setSelectionRange(start, end);
+        editor.focus();
+        selectingSection = false;
+    }
+});
+
+
+
     </script>
 
 </body>
