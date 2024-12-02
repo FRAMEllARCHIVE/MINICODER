@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mobile.IDE</title>
+    <title>mobile IDE</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -80,6 +80,24 @@
         }
 
 
+#footer {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-size: 11px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+            opacity: 0.2;
+margin: auto;
+margin-bottom: 11px;
+}
+
+
     </style>
 </head>
 <body>
@@ -133,6 +151,13 @@
     <div id="cursorPosition">
         1 : 1
     </div>
+
+<div id="footer">
+    Created by Thomas John-Michael de Beer
+</div>
+
+
+
 
     <script>
         let editor = document.getElementById('editor');
